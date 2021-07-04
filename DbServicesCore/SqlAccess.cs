@@ -17,7 +17,7 @@ namespace DbQueryApp.DbServicesCore
         public SqlAccess(DbContextOptions<SqlAccess> options) : base(options)
         {
             //SqlAccess Class is inherited from DbContext, DbContext is configured in Startup.cs as transient with options.
-            //Options are exists in appsettings.json. For now, there is only one option (Connection String)
+            //Options exist in appsettings.json. For now, there is only one option (Connection String)
             _connection = Database.GetDbConnection();
             //Connection field gets the connection reference from DbContext when the dependency of SqlAccess(DbContext) injected.
         }
