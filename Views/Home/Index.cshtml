@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Employees model1 = new Employees();
+    System.Reflection.PropertyInfo[] Properties = new System.Reflection.PropertyInfo[1];
+    List<string> PropNames = new List<string>();
+    string AlertType = string.Empty;
+
+    if (Model.alertModel.Alert == -1)
+    {
+        AlertType = "alert alert-danger";
+    }
+    else if (Model.alertModel.Alert == 1)
+    {
+        AlertType = "alert alert-primary";
+    }
+
+    if (Model.Employees.Count > 0)
+    {
+        model1 = Model.Employees.ElementAt(0);
+        Properties = model1.GetType().GetProperties();
+        foreach (var property in Properties)
+        {
+            PropNames.Add(property.Name);
+        }
+    }
+
+
+}
+
+@model ViewModel
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                @foreach (var name in PropNames)
+                {
+                    <th scope="col">@name</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Model.Employees)
+            {
+                <tr>
+
+                    @foreach (var property in Properties)
+                    {
+                        <td>@property.GetValue(row)</td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+@if (!string.IsNullOrEmpty(Model.alertModel.Message))
+{
+    <div class="@AlertType" role="alert">
+        @Model.alertModel.Message
+    </div>
+}
